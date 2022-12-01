@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React, { Component } from "react";
 
-export default class extends Component {
+export default class CustomerList extends Component {
   state = {
     pagetitle: "Customers",
     customerCount: 5,
@@ -73,7 +73,7 @@ export default class extends Component {
   };
 
   getCustomerRow = () => {
-    return this.state.customers.map((cust) => {
+    return this.state.customers.map((cust, index) => {
       return (
         <tr key={cust.id}>
           <td>{cust.id}</td>
@@ -81,7 +81,14 @@ export default class extends Component {
           <td>
             <img src="{cust.photo}" alt="Customer picture" />
             <div>
-              <button className="btn btn-sm btn-secondary">Change photo</button>
+              <button
+                className="btn btn-sm btn-secondary"
+                onClick={() => {
+                  this.onChangeChangePhoto(cust, index);
+                }}
+              >
+                Change photo
+              </button>
             </div>
           </td>
 
@@ -96,6 +103,12 @@ export default class extends Component {
         </tr>
       );
     });
+  };
+
+  onChangeChangePhoto = (cust, index) => {
+    var custarr = this.state.customers;
+    custarr[index].photo = "https://picsum.photos/id/12/2500/1667";
+    this.setState({ customers: custarr });
   };
 }
 
